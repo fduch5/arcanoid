@@ -1,16 +1,45 @@
 let game = {
     cntx: null,
-    background: null,
-    start: function(){
+    sprites: {
+        background: null,
+        ball: null,
+        platform: null
+    },
+    init(){
         const gameCanvas = document.querySelector("#game-canvas");
         this.cntx = gameCanvas.getContext("2d");
-        this.background = new Image();
-        this.background.src = "./sprites/background.png";
-        // console.log(this.background);
-        // метод drawImage канваса готовит рисунок для отрисоки, но не рисует
-        // метод requestAnimationFrame отрисовывает запланированные рисунки 
+    },
+    preload(callback){
+        let loaded  = 0;
+        const required = Object.keys(this.sprites).length;
+        // отследить событие когда картинки будут загружены полностью каждый
+        for(let key in this.sprites){
+            this.sprites[key] = new Image();
+            this.sprites[key].src = `./sprites/${key}.png`;
+            // отслеживаем загрузку картин, уже после callback
+            this.sprites[key].addEventListener("load", () => {
+                loaded += 1;
+                if(loaded >= required){
+                    callback();
+                }
+            });
+        }
+    },
+
+    run(){
         window.requestAnimationFrame(() => {
-            this.cntx.drawImage(this.background, 0, 0);
+            this.render();
+        });
+    },
+    render(){
+        this.cntx.drawImage(this.sprites.background, 0, 0);
+        this.cntx.drawImage(this.sprites.ball, 0, 0);
+        this.cntx.drawImage(this.sprites.platform, 100, 100);
+    },
+    start: function(){
+        this.init();
+        this.preload(() => {
+            this.run();
         });
     },
 };
