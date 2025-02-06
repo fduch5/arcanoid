@@ -15,6 +15,22 @@ let game = {
     init(){
         const gameCanvas = document.querySelector("#game-canvas");
         this.cntx = gameCanvas.getContext("2d");
+
+        this.setEvents();
+    },
+    setEvents(){
+        window.addEventListener("keydown", (e) => {
+            if(e.keyCode === 37){
+                console.log("left");
+                this.platform.dx = -this.platform.velocity;
+            } else if(e.keyCode === 39) {
+                console.log("right");  
+                this.platform.dx = this.platform.velocity;
+            }
+        });
+        window.addEventListener("keyup", (e) => {
+            this.platform.dx = 0;
+        });
     },
     preload(callback){
         let loaded  = 0;
@@ -65,7 +81,11 @@ let game = {
 
     run(){
         window.requestAnimationFrame(() => {
+            if(this.platform.dx) {
+                this.platform.x += this.platform.dx;
+            }
             this.render();
+            this.run();
         });
     },
 
@@ -79,6 +99,8 @@ let game = {
 };
 
 game.platform = {
+    velocity: 4,
+    dx: 0,
     x: 620 / 2 - 32,
     y: 300
 };
