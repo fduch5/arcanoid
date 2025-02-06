@@ -21,10 +21,8 @@ let game = {
     setEvents(){
         window.addEventListener("keydown", (e) => {
             if(e.keyCode === 37){
-                console.log("left");
                 this.platform.dx = -this.platform.velocity;
             } else if(e.keyCode === 39) {
-                console.log("right");  
                 this.platform.dx = this.platform.velocity;
             }
         });
@@ -79,13 +77,15 @@ let game = {
         }
     },
 
+    update(){
+        this.platform.move();
+    },
+
     run(){
         window.requestAnimationFrame(() => {
-            if(this.platform.dx) {
-                this.platform.x += this.platform.dx;
-            }
+            this.update();
             this.render();
-            this.run();
+            // this.run();
         });
     },
 
@@ -102,7 +102,13 @@ game.platform = {
     velocity: 4,
     dx: 0,
     x: 620 / 2 - 32,
-    y: 300
+    y: 300,
+
+    move(){
+        if(this.dx) {
+            this.x += this.dx;
+        }
+    },
 };
 
 game.ball = {
