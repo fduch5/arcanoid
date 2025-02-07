@@ -22,12 +22,15 @@ let game = {
         window.addEventListener("keydown", (e) => {
             if(e.keyCode === 37){
                 this.platform.dx = -this.platform.velocity;
+                this.ball.dx = -this.ball.velocity;
             } else if(e.keyCode === 39) {
                 this.platform.dx = this.platform.velocity;
+                this.ball.dx = this.ball.velocity;
             }
         });
         window.addEventListener("keyup", (e) => {
             this.platform.dx = 0;
+            this.ball.dx = 0;
         });
     },
     preload(callback){
@@ -79,13 +82,14 @@ let game = {
 
     update(){
         this.platform.move();
+        this.ball.move();
     },
 
     run(){
         window.requestAnimationFrame(() => {
             this.update();
             this.render();
-            // this.run();
+            this.run();
         });
     },
 
@@ -112,10 +116,18 @@ game.platform = {
 };
 
 game.ball = {
+    velocity: 4,
+    dx: 0,
     x: 320,
     y: 280,
     width: 20,
     height: 20,
+
+    move(){
+        if(this.dx){
+            this.x += this.dx;
+        }
+    }
 };
 
 window.addEventListener('load', () => {
