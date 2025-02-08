@@ -12,6 +12,8 @@ let game = {
     blocks: [],
     rows: 4,
     cols: 8,
+    width: 640,
+    height: 320,
     sprites: {
         background: null,
         ball: null,
@@ -56,6 +58,8 @@ let game = {
     },
 
     render(){
+        // очистка накваса перед созданием нового кадра
+        this.cntx.clearRect(0, 0, this.width, this.height);
         this.cntx.drawImage(this.sprites.background, 0, 0);
         this.cntx.drawImage(this.sprites.ball,
             0, 0, this.ball.width, this.ball.height,
@@ -109,7 +113,7 @@ let game = {
 game.ball = {
     x: 320,
     y: 280,
-    velocity: 2,
+    velocity: 3,
     dx: 0,
     dy: 0,
     width: 20,
@@ -127,7 +131,7 @@ game.ball = {
 }
 
 game.platform = {
-    velocity: 4,
+    velocity: 6,
     dx: 0, 
     x: 620 / 2 - 32,
     y: 300,
