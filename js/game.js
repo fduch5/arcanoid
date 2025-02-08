@@ -58,7 +58,7 @@ let game = {
     },
 
     render(){
-        // очистка накваса перед созданием нового кадра
+        // очистка канваса перед созданием нового кадра
         this.cntx.clearRect(0, 0, this.width, this.height);
         this.cntx.drawImage(this.sprites.background, 0, 0);
         this.cntx.drawImage(this.sprites.ball,
@@ -97,7 +97,7 @@ let game = {
         
         for (let block of this.blocks){
             if(this.ball.collide(block)){
-                console.log("collide");
+                this.ball.bumbBlock(block);
             }
         }
     },
@@ -147,15 +147,21 @@ game.ball = {
     },
 
     collide(element){
-        if(this.x + this.width > element.x &&
-            this.x < element.x + element.width &&
-            this.y + this.height > element.y &&
-            this.y < element.y + element.height
+        let x = this.x + this.dx;
+        let y = this.y + this.dy;
+        if(x + this.width > element.x &&
+            x < element.x + element.width &&
+            y + this.height > element.y &&
+            y < element.y + element.height
         ) {
             return true;
         }
         return false;
-    }
+    },
+
+    bumbBlock(block){
+        this.dy *= -1;
+    },
 }
 
 game.platform = {
