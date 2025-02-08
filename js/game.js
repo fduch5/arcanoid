@@ -82,7 +82,9 @@ let game = {
             for(let col = 0; col < this.cols; col += 1){
                 this.blocks.push({
                     x: 64 * col + 65,
-                    y: 22 * row + 35
+                    y: 22 * row + 35,
+                    width: 60,
+                    height: 20
                 });
             }
         }
@@ -91,6 +93,13 @@ let game = {
     update(){
         this.platform.move();
         this.ball.move();
+        
+        
+        for (let block of this.blocks){
+            if(this.ball.collide(block)){
+                console.log("collide");
+            }
+        }
     },
 
     run(){
@@ -136,6 +145,17 @@ game.ball = {
             this.x += this.dx;
         }
     },
+
+    collide(element){
+        if(this.x + this.width > element.x &&
+            this.x < element.x + element.width &&
+            this.y + this.height > element.y &&
+            this.y < element.y + element.height
+        ) {
+            return true;
+        }
+        return false;
+    }
 }
 
 game.platform = {
