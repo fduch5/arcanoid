@@ -100,6 +100,10 @@ let game = {
                 this.ball.bumbBlock(block);
             }
         }
+
+        if(this.ball.collide(this.platform)) {
+            console.log("ball colides platform");
+        }
     },
 
     run(){
@@ -126,7 +130,7 @@ let game = {
 game.ball = {
     x: 320,
     y: 280,
-    velocity: 3,
+    velocity: 2,
     dx: 0,
     dy: 0,
     width: 20,
@@ -165,10 +169,12 @@ game.ball = {
 }
 
 game.platform = {
-    velocity: 6,
+    velocity: 4,
     dx: 0, 
     x: 620 / 2 - 32,
     y: 300,
+    width: 100,
+    height: 14,
     ball: game.ball,
 
     start(direction){
