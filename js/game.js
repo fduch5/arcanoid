@@ -102,7 +102,7 @@ let game = {
         }
 
         if(this.ball.collide(this.platform)) {
-            console.log("ball colides platform");
+            this.ball.bumbPlatform(this.platform);
         }
     },
 
@@ -166,6 +166,10 @@ game.ball = {
     bumbBlock(block){
         this.dy *= -1;
     },
+
+    bumbPlatform(platform){
+        this.dy *= -1;
+    }
 }
 
 game.platform = {
